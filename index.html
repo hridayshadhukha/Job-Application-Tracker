@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Job Application Tracker</title>
+    <link rel="shortcut icon" href="./favicon.png" type="image/x-icon" />
+
+    <!-- tailwind+daisyUI -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/daisyui@5"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+    <!-- Google Fonts(Geist) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      * {
+        font-family: "Geist", sans-serif;
+      }
+    </style>
+  </head>
+  <body class="bg-base-200 py-10">
+    <header class="max-w-5xl mx-auto">
+      <h2 class="text-3xl text-[#002c5c] font-bold py-5">
+        Job Application Tracker
+      </h2>
+      <div
+        class="card-parent flex justify-between items-center pb-8 border-b-2 border-[#e6e7e9]"
+      >
+        <div class="card1 w-80 px-4 py-5 bg-white rounded-lg">
+          <h2 class="font-medium text-[#323b49]">Total</h2>
+          <span class="text-2xl font-bold text-[#002c5c]">8</span>
+        </div>
+        <div class="card2 w-80 px-4 py-5 bg-white rounded-lg">
+          <h2 class="font-medium text-[#323b49]">Interview</h2>
+          <span class="text-2xl font-bold text-[#10b981]">0</span>
+        </div>
+        <div class="card3 w-80 px-4 py-5 bg-white rounded-lg">
+          <h2 class="font-medium text-[#323b49]">Rejected</h2>
+          <span class="text-2xl font-bold text-[#ef4444]">0</span>
+        </div>
+      </div>
+    </header>
+  </body>
+</html>
