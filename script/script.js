@@ -1,6 +1,8 @@
 let interviewList = [];
 let rejectList = [];
 
+let activeTab = "all";
+
 let totalCount = document.getElementById("total");
 let interviewCount = document.getElementById("Interview");
 let rejectedCount = document.getElementById("Rejected");
@@ -31,30 +33,29 @@ function toggleStyle(id) {
   rejectedBtn.classList.add("bg-white", "text-[#64748b]");
 
   const selected = document.getElementById(id);
-  
 
   selected.classList.remove("bg-white", "text-[#64748b]");
   selected.classList.add("bg-[#3b82f6]", "text-white");
 
-
-  if(id == 'interview-btn'){
-    allCardDiv.classList.add('hidden');
-    filteredDiv.classList.remove('hidden')
-  }
-  else if(id == 'all-btn'){
-    allCardDiv.classList.remove('hidden')
-    filteredDiv.classList.add('hidden')
-  }
-  else if(id == 'rejected-btn'){
-    allCardDiv.classList.add('hidden')
-    filteredDiv.classList.remove('hidden')
+  if (id == "interview-btn") {
+    activeTab = "interview";
+    allCardDiv.classList.add("hidden");
+    filteredDiv.classList.remove("hidden");
+    renderinterview();
+  } else if (id == "all-btn") {
+    activeTab = "all";
+    allCardDiv.classList.remove("hidden");
+    filteredDiv.classList.add("hidden");
+  } else if (id == "rejected-btn") {
+    activeTab = "rejected";
+    allCardDiv.classList.add("hidden");
+    filteredDiv.classList.remove("hidden");
+    renderRejected();
   }
 }
 
 mainContainer.addEventListener("click", function (event) {
   if (event.target.classList.contains("interview-btn")) {
-
-
     const parentNode = event.target.parentNode.parentNode;
     const companyName = parentNode.querySelector(".company-name").innerText;
     const position = parentNode.querySelector(".position").innerText;
@@ -70,23 +71,30 @@ mainContainer.addEventListener("click", function (event) {
       companyName,
       position,
       locationTypeSalary,
-      place:'INTERVIEW',
+      place: "INTERVIEW",
       description,
     };
 
     const jobExist = interviewList.find(
       (item) => item.companyName == cardInfo.companyName,
     );
-   
+
     if (!jobExist) {
       interviewList.push(cardInfo);
     }
 
+    rejectList = rejectList.filter(
+      (item) => item.companyName != cardInfo.companyName,
+    );
+
     calculateCount();
-    renderinterview();
-  }else if (event.target.classList.contains("rejected-btn")) {
 
-
+    if (activeTab == "interview") {
+      renderinterview();
+    } else if (activeTab == "rejected") {
+      renderRejected();
+    }
+  } else if (event.target.classList.contains("rejected-btn")) {
     const parentNode = event.target.parentNode.parentNode;
     const companyName = parentNode.querySelector(".company-name").innerText;
     const position = parentNode.querySelector(".position").innerText;
@@ -102,20 +110,29 @@ mainContainer.addEventListener("click", function (event) {
       companyName,
       position,
       locationTypeSalary,
-      place:'REJECTED',
+      place: "REJECTED",
       description,
     };
 
     const jobExist = rejectList.find(
       (item) => item.companyName == cardInfo.companyName,
     );
-   
+
     if (!jobExist) {
       rejectList.push(cardInfo);
     }
 
+    interviewList = interviewList.filter(
+      (item) => item.companyName != cardInfo.companyName,
+    );
+
     calculateCount();
-    renderRejected()
+
+    if (activeTab == "interview") {
+      renderinterview();
+    } else if (activeTab == "rejected") {
+      renderRejected();
+    }
   }
 });
 
@@ -155,10 +172,10 @@ function renderinterview() {
                 </p>
               </div>
               <div class="pt-2">
-                <button class="btn btn-outline btn-success font-semibold">
+                <button class="interview-btn btn btn-outline btn-success font-semibold">
                   INTERVIEW
                 </button>
-                <button class="btn btn-outline btn-error font-semibold">
+                <button class="rejected-btn btn btn-outline btn-error font-semibold">
                   REJECTED
                 </button>
               </div>
@@ -175,8 +192,6 @@ function renderinterview() {
     filteredDiv.appendChild(div);
   }
 }
-
-
 
 function renderRejected() {
   filteredDiv.innerHTML = "";
@@ -214,10 +229,10 @@ function renderRejected() {
                 </p>
               </div>
               <div class="pt-2">
-                <button class="btn btn-outline btn-success font-semibold">
+                <button class="interview-btn btn btn-outline btn-success font-semibold">
                   INTERVIEW
                 </button>
-                <button class="btn btn-outline btn-error font-semibold">
+                <button class="rejected-btn btn btn-outline btn-error font-semibold">
                   REJECTED
                 </button>
               </div>
