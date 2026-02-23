@@ -1,0 +1,236 @@
+let interviewList = [];
+let rejectList = [];
+
+let totalCount = document.getElementById("total");
+let interviewCount = document.getElementById("Interview");
+let rejectedCount = document.getElementById("Rejected");
+
+const allBtn = document.getElementById("all-btn");
+const interviewBtn = document.getElementById("interview-btn");
+const rejectedBtn = document.getElementById("rejected-btn");
+
+const allCardDiv = document.getElementById("all-card");
+const mainContainer = document.querySelector("main");
+const filteredDiv = document.getElementById("filtered-div");
+
+function calculateCount() {
+  totalCount.innerText = allCardDiv.children.length;
+  interviewCount.innerText = interviewList.length;
+  rejectedCount.innerText = rejectList.length;
+}
+
+calculateCount();
+
+function toggleStyle(id) {
+  allBtn.classList.remove("bg-[#3b82f6]", "text-white");
+  interviewBtn.classList.remove("bg-[#3b82f6]", "text-white");
+  rejectedBtn.classList.remove("bg-[#3b82f6]", "text-white");
+
+  allBtn.classList.add("bg-white", "text-[#64748b]");
+  interviewBtn.classList.add("bg-white", "text-[#64748b]");
+  rejectedBtn.classList.add("bg-white", "text-[#64748b]");
+
+  const selected = document.getElementById(id);
+  
+
+  selected.classList.remove("bg-white", "text-[#64748b]");
+  selected.classList.add("bg-[#3b82f6]", "text-white");
+
+
+  if(id == 'interview-btn'){
+    allCardDiv.classList.add('hidden');
+    filteredDiv.classList.remove('hidden')
+  }
+  else if(id == 'all-btn'){
+    allCardDiv.classList.remove('hidden')
+    filteredDiv.classList.add('hidden')
+  }
+  else if(id == 'rejected-btn'){
+    allCardDiv.classList.add('hidden')
+    filteredDiv.classList.remove('hidden')
+  }
+}
+
+mainContainer.addEventListener("click", function (event) {
+  if (event.target.classList.contains("interview-btn")) {
+
+
+    const parentNode = event.target.parentNode.parentNode;
+    const companyName = parentNode.querySelector(".company-name").innerText;
+    const position = parentNode.querySelector(".position").innerText;
+    const locationTypeSalary = parentNode.querySelector(
+      ".location-type-salary",
+    ).innerText;
+    const place = parentNode.querySelector(".place").innerText;
+    const description = parentNode.querySelector(".description").innerText;
+
+    parentNode.querySelector(".place").innerText = "INTERVIEW";
+
+    const cardInfo = {
+      companyName,
+      position,
+      locationTypeSalary,
+      place:'INTERVIEW',
+      description,
+    };
+
+    const jobExist = interviewList.find(
+      (item) => item.companyName == cardInfo.companyName,
+    );
+   
+    if (!jobExist) {
+      interviewList.push(cardInfo);
+    }
+
+    calculateCount();
+    renderinterview();
+  }else if (event.target.classList.contains("rejected-btn")) {
+
+
+    const parentNode = event.target.parentNode.parentNode;
+    const companyName = parentNode.querySelector(".company-name").innerText;
+    const position = parentNode.querySelector(".position").innerText;
+    const locationTypeSalary = parentNode.querySelector(
+      ".location-type-salary",
+    ).innerText;
+    const place = parentNode.querySelector(".place").innerText;
+    const description = parentNode.querySelector(".description").innerText;
+
+    parentNode.querySelector(".place").innerText = "REJECTED";
+
+    const cardInfo = {
+      companyName,
+      position,
+      locationTypeSalary,
+      place:'REJECTED',
+      description,
+    };
+
+    const jobExist = rejectList.find(
+      (item) => item.companyName == cardInfo.companyName,
+    );
+   
+    if (!jobExist) {
+      rejectList.push(cardInfo);
+    }
+
+    calculateCount();
+    renderRejected()
+  }
+});
+
+function renderinterview() {
+  filteredDiv.innerHTML = "";
+
+  for (let interview of interviewList) {
+    let div = document.createElement("div");
+    div.className = "mt-6 grid grid-cols-1 gap-5";
+    div.innerHTML = `
+    <div
+            class="job-card card-1 flex justify-between px-8 py-6 bg-white rounded-lg"
+          >
+            <div>
+              <div>
+                <h2
+                  class="company-name text-[18px] text-[#002c5c] font-semibold"
+                >
+                  ${interview.companyName}
+
+                </h2>
+
+                <h4 class="position text-[#64748b]">${interview.position}</h4>
+              </div>
+
+              <p class="location-type-salary text-[#64748b] text-sm py-6 pb-8">
+                ${interview.locationTypeSalary}
+              </p>
+
+              <div>
+                <span
+                  class="place px-4 py-3 bg-[#e4f4ff] rounded-md text-[#002c5c] font-medium"
+                  >${interview.place}</span
+                >
+                <p class="description py-4 text-[#323b49]">
+                  ${interview.description}
+                </p>
+              </div>
+              <div class="pt-2">
+                <button class="btn btn-outline btn-success font-semibold">
+                  INTERVIEW
+                </button>
+                <button class="btn btn-outline btn-error font-semibold">
+                  REJECTED
+                </button>
+              </div>
+            </div>
+
+            <div
+              class="delete-icon btn flex items-center justify-center w-8 h-8 rounded-full"
+            >
+              <span><i class="fa-solid fa-trash text-[#64748b]"></i></span>
+            </div>
+          </div>
+    `;
+
+    filteredDiv.appendChild(div);
+  }
+}
+
+
+
+function renderRejected() {
+  filteredDiv.innerHTML = "";
+
+  for (let reject of rejectList) {
+    let div = document.createElement("div");
+    div.className = "mt-6 grid grid-cols-1 gap-5";
+    div.innerHTML = `
+    <div
+            class="job-card card-1 flex justify-between px-8 py-6 bg-white rounded-lg"
+          >
+            <div>
+              <div>
+                <h2
+                  class="company-name text-[18px] text-[#002c5c] font-semibold"
+                >
+                  ${reject.companyName}
+
+                </h2>
+
+                <h4 class="position text-[#64748b]">${reject.position}</h4>
+              </div>
+
+              <p class="location-type-salary text-[#64748b] text-sm py-6 pb-8">
+                ${reject.locationTypeSalary}
+              </p>
+
+              <div>
+                <span
+                  class="place px-4 py-3 bg-[#e4f4ff] rounded-md text-[#002c5c] font-medium"
+                  >${reject.place}</span
+                >
+                <p class="description py-4 text-[#323b49]">
+                  ${reject.description}
+                </p>
+              </div>
+              <div class="pt-2">
+                <button class="btn btn-outline btn-success font-semibold">
+                  INTERVIEW
+                </button>
+                <button class="btn btn-outline btn-error font-semibold">
+                  REJECTED
+                </button>
+              </div>
+            </div>
+
+            <div
+              class="delete-icon btn flex items-center justify-center w-8 h-8 rounded-full"
+            >
+              <span><i class="fa-solid fa-trash text-[#64748b]"></i></span>
+            </div>
+          </div>
+    `;
+
+    filteredDiv.appendChild(div);
+  }
+}
