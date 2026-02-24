@@ -17,33 +17,25 @@ const filteredDiv = document.getElementById("filtered-div");
 const empty = document.getElementById("empty");
 
 function calculateCount() {
-
-
   totalCount.innerText = allCardDiv.children.length;
   interviewCount.innerText = interviewList.length;
   rejectedCount.innerText = rejectList.length;
 
-
   const avaiableJob = document.getElementById("available-jobs-count");
 
-  if(activeTab =="all"){
+  if (activeTab == "all") {
     avaiableJob.innerText = "8 Jobs";
-  }
-  else if(activeTab == "interview"){
-    if(interviewList.length == 0){
+  } else if (activeTab == "interview") {
+    if (interviewList.length == 0) {
       avaiableJob.innerText = `0 Jobs`;
+    } else {
+      avaiableJob.innerText = `${interviewList.length} of 8 Jobs`;
     }
-    else{
-      avaiableJob.innerText = `${interviewList.length} of 8 Jobs`
-    }
-  }
-
-  else if(activeTab == "rejected"){
-    if(rejectList.length == 0){
+  } else if (activeTab == "rejected") {
+    if (rejectList.length == 0) {
       avaiableJob.innerText = `0 Jobs`;
-    }
-    else{
-      avaiableJob.innerText = `${rejectList.length} of 8 Jobs`
+    } else {
+      avaiableJob.innerText = `${rejectList.length} of 8 Jobs`;
     }
   }
 }
@@ -80,21 +72,27 @@ function toggleStyle(id) {
     renderRejected();
   }
 
-  calculateCount()
+  calculateCount();
 }
 
 mainContainer.addEventListener("click", function (event) {
   if (event.target.classList.contains("interview-btn")) {
     const parentNode = event.target.parentNode.parentNode;
+
     const companyName = parentNode.querySelector(".company-name").innerText;
     const position = parentNode.querySelector(".position").innerText;
     const locationTypeSalary = parentNode.querySelector(
       ".location-type-salary",
     ).innerText;
-    const place = parentNode.querySelector(".place").innerText;
+    const placeChange = parentNode.querySelector(".place");
     const description = parentNode.querySelector(".description").innerText;
 
-    parentNode.querySelector(".place").innerText = "INTERVIEW";
+    
+    
+    placeChange.classList.remove("bg-[#e4f4ff]", "bg-green-200", "bg-red-200")
+    placeChange.innerText = "INTERVIEW";
+    placeChange.classList.add("bg-green-200")
+    
 
     const cardInfo = {
       companyName,
@@ -130,10 +128,13 @@ mainContainer.addEventListener("click", function (event) {
     const locationTypeSalary = parentNode.querySelector(
       ".location-type-salary",
     ).innerText;
-    const place = parentNode.querySelector(".place").innerText;
+    const placeChange = parentNode.querySelector(".place");
     const description = parentNode.querySelector(".description").innerText;
 
-    parentNode.querySelector(".place").innerText = "REJECTED";
+    
+    placeChange.classList.remove("bg-[#e4f4ff]", "bg-green-200", "bg-red-200")
+    placeChange.innerText = "REJECTED";
+    placeChange.classList.add("bg-red-200")
 
     const cardInfo = {
       companyName,
@@ -168,14 +169,13 @@ mainContainer.addEventListener("click", function (event) {
 function renderinterview() {
   filteredDiv.innerHTML = "";
 
-
-  if(interviewList.length < 1){
+  if (interviewList.length < 1) {
     empty.classList.remove("hidden");
     filteredDiv.appendChild(empty);
     return;
   }
 
-  empty.classList.add("hidden")
+  empty.classList.add("hidden");
 
   for (let interview of interviewList) {
     let div = document.createElement("div");
@@ -234,15 +234,13 @@ function renderinterview() {
 function renderRejected() {
   filteredDiv.innerHTML = "";
 
-
-  
-  if(rejectList.length < 1){
+  if (rejectList.length < 1) {
     empty.classList.remove("hidden");
     filteredDiv.appendChild(empty);
     return;
   }
 
-  empty.classList.add("hidden")
+  empty.classList.add("hidden");
 
   for (let reject of rejectList) {
     let div = document.createElement("div");
