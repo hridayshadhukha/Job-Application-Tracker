@@ -23,11 +23,14 @@ function calculateCount() {
 
   const avaiableJob = document.getElementById("available-jobs-count");
 
+
+  
+
   if (activeTab == "all") {
-    avaiableJob.innerText = "8 Jobs";
+    avaiableJob.innerText = `${allCardDiv.children.length} Jobs`;
   } else if (activeTab == "interview") {
     if (interviewList.length == 0) {
-      avaiableJob.innerText = `0 Jobs`;
+      avaiableJob.innerText = `${interviewList.length} Jobs`;
     } else {
       avaiableJob.innerText = `${interviewList.length} of 8 Jobs`;
     }
@@ -52,7 +55,6 @@ function toggleStyle(id) {
   rejectedBtn.classList.add("bg-white", "text-[#64748b]");
 
   const selected = document.getElementById(id);
-
   selected.classList.remove("bg-white", "text-[#64748b]");
   selected.classList.add("bg-[#3b82f6]", "text-white");
 
@@ -79,6 +81,8 @@ mainContainer.addEventListener("click", function (event) {
   if (event.target.classList.contains("interview-btn")) {
     const parentNode = event.target.parentNode.parentNode;
 
+    
+
     const companyName = parentNode.querySelector(".company-name").innerText;
     const position = parentNode.querySelector(".position").innerText;
     const locationTypeSalary = parentNode.querySelector(
@@ -87,12 +91,16 @@ mainContainer.addEventListener("click", function (event) {
     const placeChange = parentNode.querySelector(".place");
     const description = parentNode.querySelector(".description").innerText;
 
-    
-    
-    placeChange.classList.remove("bg-[#e4f4ff]", "bg-green-200", "bg-red-200")
+    placeChange.classList.remove(
+      "bg-[#e4f4ff]",
+      "bg-green-100",
+      "bg-red-100",
+      "text-green-400",
+      "text-red-400",
+      "border-2",
+    );
     placeChange.innerText = "INTERVIEW";
-    placeChange.classList.add("bg-green-200")
-    
+    placeChange.classList.add("bg-green-100", "text-green-400", "border-2");
 
     const cardInfo = {
       companyName,
@@ -131,10 +139,16 @@ mainContainer.addEventListener("click", function (event) {
     const placeChange = parentNode.querySelector(".place");
     const description = parentNode.querySelector(".description").innerText;
 
-    
-    placeChange.classList.remove("bg-[#e4f4ff]", "bg-green-200", "bg-red-200")
+    placeChange.classList.remove(
+      "bg-[#e4f4ff]",
+      "bg-green-100",
+      "bg-red-100",
+      "text-green-400",
+      "text-red-400",
+      "border-2",
+    );
     placeChange.innerText = "REJECTED";
-    placeChange.classList.add("bg-red-200")
+    placeChange.classList.add("bg-red-100", "text-red-400", "border-2");
 
     const cardInfo = {
       companyName,
@@ -164,6 +178,40 @@ mainContainer.addEventListener("click", function (event) {
       renderRejected();
     }
   }
+
+
+  else if (event.target.closest(".delete-icon")) { 
+
+    const card = event.target.closest(".job-card");
+    const companyName = card.querySelector(".company-name").innerText;
+
+    
+    interviewList = interviewList.filter(
+      (item) => item.companyName !== companyName
+    );
+
+    
+    rejectList = rejectList.filter(
+      (item) => item.companyName !== companyName
+    );
+
+    
+    if (activeTab === "all") {
+      card.remove();
+    }
+
+    
+    if (activeTab === "interview") {
+      renderinterview();
+    }
+
+    if (activeTab === "rejected") {
+      renderRejected();
+    }
+
+    calculateCount();
+  }
+
 });
 
 function renderinterview() {
@@ -202,7 +250,7 @@ function renderinterview() {
 
               <div>
                 <span
-                  class="place px-4 py-3 bg-[#e4f4ff] rounded-md text-[#002c5c] font-medium"
+                  class="place px-4 py-3 rounded-md text-green-400 bg-green-100 border-2 font-medium"
                   >${interview.place}</span
                 >
                 <p class="description py-4 text-[#323b49]">
@@ -267,7 +315,7 @@ function renderRejected() {
 
               <div>
                 <span
-                  class="place px-4 py-3 bg-[#e4f4ff] rounded-md text-[#002c5c] font-medium"
+                  class="place px-4 py-3 rounded-md font-medium bg-red-100 text-red-400 border-2"
                   >${reject.place}</span
                 >
                 <p class="description py-4 text-[#323b49]">
