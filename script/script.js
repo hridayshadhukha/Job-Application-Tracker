@@ -28,13 +28,13 @@ function calculateCount() {
     avaiableJob.innerText = `${totalJobs} Jobs`;
   } else if (activeTab == "interview") {
     if (interviewList.length == 0) {
-      avaiableJob.innerText = `0 of ${totalJobs} Jobs`;
+      avaiableJob.innerText = `0 Jobs`;
     } else {
       avaiableJob.innerText = `${interviewList.length} of ${totalJobs} Jobs`;
     }
   } else if (activeTab == "rejected") {
     if (rejectList.length == 0) {
-      avaiableJob.innerText = `0 of ${totalJobs} Jobs`;
+      avaiableJob.innerText = `0 Jobs`;
     } else {
       avaiableJob.innerText = `${rejectList.length} of ${totalJobs} Jobs`;
     }
