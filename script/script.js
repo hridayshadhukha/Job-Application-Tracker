@@ -14,11 +14,38 @@ const rejectedBtn = document.getElementById("rejected-btn");
 const allCardDiv = document.getElementById("all-card");
 const mainContainer = document.querySelector("main");
 const filteredDiv = document.getElementById("filtered-div");
+const empty = document.getElementById("empty");
 
 function calculateCount() {
+
+
   totalCount.innerText = allCardDiv.children.length;
   interviewCount.innerText = interviewList.length;
   rejectedCount.innerText = rejectList.length;
+
+
+  const avaiableJob = document.getElementById("available-jobs-count");
+
+  if(activeTab =="all"){
+    avaiableJob.innerText = "8 Jobs";
+  }
+  else if(activeTab == "interview"){
+    if(interviewList.length == 0){
+      avaiableJob.innerText = `0 Jobs`;
+    }
+    else{
+      avaiableJob.innerText = `${interviewList.length} of 8 Jobs`
+    }
+  }
+
+  else if(activeTab == "rejected"){
+    if(rejectList.length == 0){
+      avaiableJob.innerText = `0 Jobs`;
+    }
+    else{
+      avaiableJob.innerText = `${rejectList.length} of 8 Jobs`
+    }
+  }
 }
 
 calculateCount();
@@ -52,6 +79,8 @@ function toggleStyle(id) {
     filteredDiv.classList.remove("hidden");
     renderRejected();
   }
+
+  calculateCount()
 }
 
 mainContainer.addEventListener("click", function (event) {
@@ -139,6 +168,15 @@ mainContainer.addEventListener("click", function (event) {
 function renderinterview() {
   filteredDiv.innerHTML = "";
 
+
+  if(interviewList.length < 1){
+    empty.classList.remove("hidden");
+    filteredDiv.appendChild(empty);
+    return;
+  }
+
+  empty.classList.add("hidden")
+
   for (let interview of interviewList) {
     let div = document.createElement("div");
     div.className = "mt-6 grid grid-cols-1 gap-5";
@@ -195,6 +233,16 @@ function renderinterview() {
 
 function renderRejected() {
   filteredDiv.innerHTML = "";
+
+
+  
+  if(rejectList.length < 1){
+    empty.classList.remove("hidden");
+    filteredDiv.appendChild(empty);
+    return;
+  }
+
+  empty.classList.add("hidden")
 
   for (let reject of rejectList) {
     let div = document.createElement("div");
