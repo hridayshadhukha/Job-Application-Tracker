@@ -22,23 +22,21 @@ function calculateCount() {
   rejectedCount.innerText = rejectList.length;
 
   const avaiableJob = document.getElementById("available-jobs-count");
-
-
-  
+  const totalJobs = allCardDiv.querySelectorAll(".job-card").length;
 
   if (activeTab == "all") {
-    avaiableJob.innerText = `${allCardDiv.children.length} Jobs`;
+    avaiableJob.innerText = `${totalJobs} Jobs`;
   } else if (activeTab == "interview") {
     if (interviewList.length == 0) {
-      avaiableJob.innerText = `${interviewList.length} Jobs`;
+      avaiableJob.innerText = `0 of ${totalJobs} Jobs`;
     } else {
-      avaiableJob.innerText = `${interviewList.length} of 8 Jobs`;
+      avaiableJob.innerText = `${interviewList.length} of ${totalJobs} Jobs`;
     }
   } else if (activeTab == "rejected") {
     if (rejectList.length == 0) {
-      avaiableJob.innerText = `0 Jobs`;
+      avaiableJob.innerText = `0 of ${totalJobs} Jobs`;
     } else {
-      avaiableJob.innerText = `${rejectList.length} of 8 Jobs`;
+      avaiableJob.innerText = `${rejectList.length} of ${totalJobs} Jobs`;
     }
   }
 }
@@ -80,8 +78,6 @@ function toggleStyle(id) {
 mainContainer.addEventListener("click", function (event) {
   if (event.target.classList.contains("interview-btn")) {
     const parentNode = event.target.parentNode.parentNode;
-
-    
 
     const companyName = parentNode.querySelector(".company-name").innerText;
     const position = parentNode.querySelector(".position").innerText;
@@ -177,30 +173,20 @@ mainContainer.addEventListener("click", function (event) {
     } else if (activeTab == "rejected") {
       renderRejected();
     }
-  }
-
-
-  else if (event.target.closest(".delete-icon")) { 
-
+  } else if (event.target.closest(".delete-icon")) {
     const card = event.target.closest(".job-card");
     const companyName = card.querySelector(".company-name").innerText;
 
-    
     interviewList = interviewList.filter(
-      (item) => item.companyName !== companyName
+      (item) => item.companyName !== companyName,
     );
 
-    
-    rejectList = rejectList.filter(
-      (item) => item.companyName !== companyName
-    );
+    rejectList = rejectList.filter((item) => item.companyName !== companyName);
 
-    
     if (activeTab === "all") {
       card.remove();
     }
 
-    
     if (activeTab === "interview") {
       renderinterview();
     }
@@ -211,7 +197,6 @@ mainContainer.addEventListener("click", function (event) {
 
     calculateCount();
   }
-
 });
 
 function renderinterview() {
