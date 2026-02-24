@@ -212,7 +212,7 @@ function renderinterview() {
 
   for (let interview of interviewList) {
     let div = document.createElement("div");
-    div.className = "mt-6 grid grid-cols-1 gap-5";
+    div.className = "mt-6 grid grid-cols-1 gap-5 px-5 sm:px-0";
     div.innerHTML = `
     <div
             class="job-card card-1 flex justify-between px-8 py-6 bg-white rounded-lg"
